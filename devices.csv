@@ -1,0 +1,8 @@
+device_label,connection_type,host
+RTR,SSH,192.168.1.1
+FW,SSH,192.168.1.2
+SW1,SSH,192.168.1.3
+SW2,SSH,192.168.1.4
+AP,SSH,192.168.1.5
+Serial,COM1
+Serial,COM2
