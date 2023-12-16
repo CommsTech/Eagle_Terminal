@@ -48,9 +48,13 @@ def get_network_status(ip_address):
         next(csv_reader)  # Skip the header row
 
         for row in csv_reader:
+            if len(row) < 3:
+                continue  # Skip the line if it doesn't have enough columns
+
             device_label = row[0]
             connection_type = row[1]
             host = row[2]
+
 
             # Perform ping operation
             ping_result = subprocess.run(['ping', '-n', '1', '-w', '1000', ip_address], capture_output=True, text=True)
