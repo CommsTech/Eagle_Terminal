@@ -31,7 +31,6 @@ This document will guide you on how to install and use EagleTerm_v0.1
 - `Eagle_Terminal.py`: The main entry point of the application.
 - `Chief/Chief_AI.py`: Contains the AI chat functionality.
 - `Functions/device_status.py`: Implements network status checking functions.
-- `ConnectionTab.py`: Defines the ConnectionTab class, responsible for managing network connections.
 - `devices.csv`: CSV file containing the list of network devices.
 - `requirements.txt`: Contains the required Python dependencies.
 
