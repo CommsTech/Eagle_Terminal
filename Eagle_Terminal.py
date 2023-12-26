@@ -112,12 +112,6 @@ class ConnectionTab:
             transport = ssh_client.get_transport()
             hostname = transport.getpeername()[0]
             ai_question_entry = None
-##            if ai_question_entry:
-##                ai_question_entry = command_entry.get()
-##            ai_question_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
-##            ai_input_button = tk.Button(ssh_session_tab, text="Ask Chief", command=lambda: send_command(output_text, command_entry=command_entry, ai_question_entry="Chief " + command_entry.get()))
-##            ai_input_button.pack()
-##            command_entry.focus_set()
 
             def send_command(output_text, command_entry, ssh_client=None, ai_question_entry=None):
                 command = command_entry.get()
