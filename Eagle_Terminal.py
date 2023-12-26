@@ -3,7 +3,8 @@ import subprocess
 import sys
 import logging
 import tkinter as tk
-import device_status
+import Functions.device_status as device_status
+from Chief.Chief_AI import Chief
 from tkinter import ttk, messagebox, Scrollbar, Text, Entry
 try:
     import paramiko
@@ -13,12 +14,13 @@ except ImportError:
     import paramiko
     import serial
 from serial.tools.list_ports import comports
-from functools import partial
+
 
 #logging.basicConfig(level=logging.DEBUG)
 
 #define the commands file for quick access
-commands_file = 'commands.txt'
+commands_file = 'commands.csv'
+Chief = Chief()
 
 class ConnectionTab:
     def __init__(self, parent, notebook):
@@ -107,31 +109,50 @@ class ConnectionTab:
             command_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
             send_button = tk.Button(ssh_session_tab, text="Send", command=lambda: send_command(output_text, command_entry, ssh_client))
             send_button.pack(side=tk.LEFT)
-        
-            def send_command(output_text, command_entry, ssh_client):
+            transport = ssh_client.get_transport()
+            hostname = transport.getpeername()[0]
+            ai_question_entry = None
+##            if ai_question_entry:
+##                ai_question_entry = command_entry.get()
+##            ai_question_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+##            ai_input_button = tk.Button(ssh_session_tab, text="Ask Chief", command=lambda: send_command(output_text, command_entry=command_entry, ai_question_entry="Chief " + command_entry.get()))
+##            ai_input_button.pack()
+##            command_entry.focus_set()
+
+            def send_command(output_text, command_entry, ssh_client=None, ai_question_entry=None):
                 command = command_entry.get()
+                
                 if not command:
                     return
             
-                stdin, stdout, stderr = ssh_client.exec_command(command)
-                # Read the output in chunks
-                output = ""
-                for line in stdout:
-                    output += line.strip() + "\n"
-                for line in stderr:
-                    output += line.strip() + "\n"
-                    
-                output_text.insert(tk.END, output)
+                if "Chief" in command:
+                    ai_question_entry = command
+                    output_text.insert(tk.END, "User: " + ai_question_entry + "\n")
+                    if ai_question_entry:
+                        ai_response= Chief.quick_prompt(ai_question_entry)
+                        output_text.insert(tk.END, "Chief: " + ai_response + "\n")
+                else:
+                    # Handle command
+                    stdin, stdout, stderr = ssh_client.exec_command(command)
+                    # Read the output in chunks
+                    output = ""
+                    for line in stdout:
+                        output += line.strip() + "\n"
+                    for line in stderr:
+                        output += line.strip() + "\n"
+                    output_text.insert(tk.END, hostname + output + "\n")
+            
                 output_text.see(tk.END)
-
+            
                 command_entry.delete(0, tk.END)
                 command_entry.focus_set()
-        
-            command_entry.bind("<Return>", lambda event: send_command(output_text, command_entry, ssh_client))
+
+            command_entry.bind("<Return>", lambda event: send_command(output_text, command_entry, ssh_client, ai_question_entry))
             self.parent.mainloop()
             ssh_client.close()
         else:
             print("Invalid connection type")
+            
     def create_configure_button(self):
         configure_button = ttk.Button(self.tab, text="Configure Custom Connection", command=self.configure_custom_connection)
         configure_button.pack()
@@ -196,8 +217,6 @@ class ConnectionTab:
         if not self.password_entry.get():
             self.password_entry.insert(0, "Password")
 
-
-
 if __name__ == "__main__":
     # Create the main application window
     root = tk.Tk()
@@ -217,14 +236,10 @@ if __name__ == "__main__":
 
     # Create the tabs
     connection_tab = ConnectionTab(root, notebook)
-    #ssh_tab = SSHTab(notebook)
-    #serial_tab = SerialTab(notebook)
-    
+
 
     # Add the tabs to the notebook
     notebook.add(connection_tab.tab, text="Connections")
-    #notebook.add(ssh_tab.tab, text="SSH")
-    #notebook.add(serial_tab.tab, text="Serial")
-    
+
 
     root.mainloop()

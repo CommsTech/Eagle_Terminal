@@ -1,0 +1,6 @@
+paramiko
+cryptography
+pycryptodome
+pyinstaller
+pyserial
+gpt4all
