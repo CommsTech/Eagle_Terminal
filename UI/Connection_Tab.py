@@ -1,6 +1,7 @@
 import csv
 import subprocess
 import sys
+import logging
 import tkinter as tk
 import Functions.device_status as device_status
 from Chief.Chief_AI import Chief
@@ -8,24 +9,22 @@ from tkinter import ttk, messagebox, Scrollbar, Text, Entry
 try:
     import paramiko
     import serial
-    import psutil
 except ImportError:
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'paramiko', 'pyserial', 'psutil'])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'paramiko', 'pyserial'])
     import paramiko
     import serial
-    import psutil
 from serial.tools.list_ports import comports
 
-# Enable for debugging
-#import logging
+
 #logging.basicConfig(level=logging.DEBUG)
 
 #define the commands file for quick access
 commands_file = 'commands.csv'
 Chief = Chief()
 
-class ConnectionTab:
+class ConnectionTab(ttk.Frame):
     def __init__(self, parent, notebook):
+        super().__init__(parent)
         self.parent = notebook
         self.notebook = notebook
         self.tab = ttk.Frame(self.parent)
@@ -37,22 +36,21 @@ class ConnectionTab:
         self.create_configure_button()
 
     def create_userpass_widgets(self):
+        # Define the Username Box
         self.username_label = ttk.Label(self.tab, text="Username:")
         self.username_label.pack()
-
         self.username_entry = ttk.Entry(self.tab)
         self.username_entry.pack(pady=5)
-
+        # Define the Password Box
         self.password_label = ttk.Label(self.tab, text="Password:")
         self.password_label.pack()
-
         self.password_entry = ttk.Entry(self.tab, show="*")
         self.password_entry.pack(pady=5)
 
     def read_devices_file(self, filename):
         try:
-            with open(filename) as csvfile:
-                reader = csv.DictReader(csvfile)
+            with open(filename) as file:
+                reader = csv.DictReader(file)
                 devices = list(reader)
                 return devices
         except FileNotFoundError as e:
@@ -74,9 +72,8 @@ class ConnectionTab:
             if connection_type == 'SSH':
                 button_text = f"{device_label} - {connection_type} {host} ({status['status']})"
                 button = self.create_button(self.tab, button_text, self.select_connection, connection_type=connection_type, host=host)
-
+        
     def create_serial_widgets(self):
-        # Creates serial widgets based on the devices in the self.devices list.
         for row in self.devices:
             device_label = row['device_label']
             connection_type = row['connection_type']
@@ -115,13 +112,19 @@ class ConnectionTab:
             transport = ssh_client.get_transport()
             hostname = transport.getpeername()[0]
             ai_question_entry = None
+##            if ai_question_entry:
+##                ai_question_entry = command_entry.get()
+##            ai_question_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
+##            ai_input_button = tk.Button(ssh_session_tab, text="Ask Chief", command=lambda: send_command(output_text, command_entry=command_entry, ai_question_entry="Chief " + command_entry.get()))
+##            ai_input_button.pack()
+##            command_entry.focus_set()
 
             def send_command(output_text, command_entry, ssh_client=None, ai_question_entry=None):
                 command = command_entry.get()
-
+                
                 if not command:
                     return
-
+            
                 if "Chief" in command:
                     ai_question_entry = command
                     output_text.insert(tk.END, "User: " + ai_question_entry + "\n")
@@ -138,9 +141,9 @@ class ConnectionTab:
                     for line in stderr:
                         output += line.strip() + "\n"
                     output_text.insert(tk.END, hostname + output + "\n")
-
+            
                 output_text.see(tk.END)
-
+            
                 command_entry.delete(0, tk.END)
                 command_entry.focus_set()
 
@@ -149,7 +152,7 @@ class ConnectionTab:
             ssh_client.close()
         else:
             print("Invalid connection type")
-
+            
     def create_configure_button(self):
         configure_button = ttk.Button(self.tab, text="Configure Custom Connection", command=self.configure_custom_connection)
         configure_button.pack()
@@ -157,40 +160,40 @@ class ConnectionTab:
     def configure_custom_connection(self):
         custom_window = tk.Toplevel(self.parent)
         custom_window.title("Custom Connection")
-
+    
         # Create and pack the labels and entry fields
         ttk.Label(custom_window, text="Device Label:").pack()
         device_label_entry = ttk.Entry(custom_window)
         device_label_entry.pack()
-
+    
         ttk.Label(custom_window, text="Connection Type:").pack()
         connection_type_var = tk.StringVar(value="SSH")
         connection_type_dropdown = ttk.Combobox(custom_window, textvariable=connection_type_var, values=["SSH", "Serial"])
         connection_type_dropdown.pack()
-
+    
         ttk.Label(custom_window, text="Host:").pack()
         host_entry = ttk.Entry(custom_window)
         host_entry.pack()
-
+    
         # Function to save the device information
         def save_device():
             device_label = device_label_entry.get()
             connection_type = connection_type_var.get()
             host = host_entry.get()
-
+    
             # Append the device information to the devices list
             self.devices.append({
                 'device_label': device_label,
                 'connection_type': connection_type,
                 'host': host
             })
-
+    
             # Create the device button
             button_text = f"{device_label} - {connection_type} {host}"
             self.create_button(self.tab, button_text, self.select_connection, connection_type=connection_type, host=host)
-
+            
             # append the device information to the devices.csv file
-            with open('devices.csv', 'a', newline='', encoding='utf-8') as csvfile:
+            with open('devices.csv', 'a', newline='') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=['device_label', 'connection_type', 'host'])
                 writer.writerow({
                     'device_label': device_label,
@@ -199,58 +202,31 @@ class ConnectionTab:
                 })
             # Close the custom window
             custom_window.destroy()
+    
         # Create and pack the save button
         save_button = ttk.Button(custom_window, text="Save", command=save_device)
         save_button.pack()
     
         custom_window.mainloop()
 
-    def set_username_placeholder(self):
+    def set_username_placeholder(self, event):
         if not self.username_entry.get():
             self.username_entry.insert(0, "Username")
 
-    def set_password_placeholder(self):
+    def set_password_placeholder(self, event):
         if not self.password_entry.get():
             self.password_entry.insert(0, "Password")
-
-gui_closed = False
-
-
-
-def close_python_subprocesses():
-    for proc in psutil.process_iter():
-        try:
-            if proc.name() == "python.exe":
-                proc.terminate()
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
-
-# Call the close_python_subprocesses function in your on_closing function
-def on_closing():
-    global gui_closed
-
-    # Terminate the Chief_AI.py program
-    subprocess.call(["python", "Chief/Chief_AI.py", "terminate"])
-
-    # Perform any necessary cleanup or finalization tasks here
-    # ...
-    
-    # Set the flag indicating GUI window is closed
-    gui_closed = True
-
-    # Stop the main event loop
-    root.destroy()
-
-    # Close the Python subprocesses
-    close_python_subprocesses()
 
 if __name__ == "__main__":
     # Create the main application window
     root = tk.Tk()
-
+    
     # Set the window title
-    root.title("Eagle Terminal_v0.2")
-
+    root.title("Eagle Terminal_v0.1")
+    
+    # Set the icon
+    # root.iconbitmap("path_to_icon_file.ico")
+    
     # Set the window size
     root.geometry("800x600")
 
@@ -261,22 +237,9 @@ if __name__ == "__main__":
     # Create the tabs
     connection_tab = ConnectionTab(root, notebook)
 
+
     # Add the tabs to the notebook
     notebook.add(connection_tab.tab, text="Connections")
 
-    # Bind the close event to the on_closing function
-    root.protocol("WM_DELETE_WINDOW", on_closing)
 
-    # Start the main event loop
     root.mainloop()
-
-    # Check if the GUI window is closed
-    if gui_closed:
-        # Perform any necessary cleanup or finalization tasks here
-        # ...
-
-        print("Closing program...")
-
-        # Exit the program
-        sys.exit()
-    # End-of-file (EOF)

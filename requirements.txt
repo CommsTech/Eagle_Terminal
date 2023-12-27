@@ -4,3 +4,4 @@ pycryptodome
 pyinstaller
 pyserial
 gpt4all
+psutil
