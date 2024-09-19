@@ -10,9 +10,14 @@ try:
     import paramiko
     import serial
 except ImportError:
+    import subprocess
+    import sys
+    
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'paramiko', 'pyserial'])
-    import paramiko
-    import serial
+    import importlib
+    
+    paramiko = importlib.import_module('paramiko')
+    serial = importlib.import_module('pyserial')
 from serial.tools.list_ports import comports
 
 
