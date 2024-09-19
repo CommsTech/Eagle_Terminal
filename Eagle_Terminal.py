@@ -10,7 +10,7 @@ try:
     import serial
     import psutil
 except ImportError:
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'paramiko', 'pyserial', 'psutil'])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'paramiko', 'pyserial', 'psutil'], check=True)
     import paramiko
     import serial
     import psutil
@@ -229,8 +229,9 @@ def close_python_subprocesses():
 def on_closing():
     global gui_closed
 
-    # Terminate the Chief_AI.py program
-    subprocess.call(["python", "Chief/Chief_AI.py", "terminate"])
+    # Validate arguments to avoid command injection
+    args = ["python", "Chief/Chief_AI.py", "terminate"]
+    subprocess.call(args)
 
     # Perform any necessary cleanup or finalization tasks here
     # ...
@@ -243,7 +244,6 @@ def on_closing():
 
     # Close the Python subprocesses
     close_python_subprocesses()
-
 if __name__ == "__main__":
     # Create the main application window
     root = tk.Tk()
