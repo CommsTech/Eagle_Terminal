@@ -4,6 +4,15 @@ from tkinter import ttk
 class Custom_Connection:
            
     def configure_custom_connection(self, parent):
+        """
+        Configures a custom connection by creating a new window for user input.
+        
+        Args:
+            parent (tk.Tk): The parent window for the custom connection dialog.
+        
+        Returns:
+            None: This method doesn't return anything, it creates a new window and handles the connection configuration.
+        """
         custom_window = tk.Toplevel(self.parent)
         custom_window.title("Custom Connection")
         
@@ -14,7 +23,20 @@ class Custom_Connection:
         
         ttk.Label(custom_window, text="Connection Type:").pack()
         connection_type_var = tk.StringVar(value="SSH")
-        connection_type_dropdown = ttk.Combobox(custom_window, textvariable=connection_type_var, values=["SSH", "Serial"])
+        """
+        Saves a new device's information and creates a corresponding button.
+        
+        Args:
+            None
+        
+        Returns:
+            None: This function doesn't return a value, but it performs the following actions:
+                - Appends the device information to the devices list
+                - Creates a button for the device in the UI
+                - Appends the device information to the 'devices.csv' file
+                - Closes the custom window used for input
+        
+        """        connection_type_dropdown = ttk.Combobox(custom_window, textvariable=connection_type_var, values=["SSH", "Serial"])
         connection_type_dropdown.pack()
         
         ttk.Label(custom_window, text="Host:").pack()
