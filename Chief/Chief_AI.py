@@ -14,6 +14,14 @@ class Chief:
     """
 
     def __init__(self):
+        """Initializes the GPT4All model with a specific configuration.
+        
+        Args:
+            None
+        
+        Returns:
+            None: This method initializes the object and doesn't return anything.
+        """
         self.model_name = 'mistral-7b-instruct-v0.1.Q4_0.gguf'
         if 'Eagle_Terminal' in str(Path.cwd()):
             self.model_path = Path.cwd() / 'Chief' / 'Model'
