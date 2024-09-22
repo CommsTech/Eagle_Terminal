@@ -24,6 +24,15 @@ Chief = Chief()
 
 class ConnectionTab(ttk.Frame):
     def __init__(self, parent, notebook):
+        """Initializes the Connections tab in the notebook.
+        
+        Args:
+            parent (ttk.Notebook): The parent notebook widget.
+            notebook (ttk.Notebook): The main notebook widget.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         super().__init__(parent)
         self.parent = notebook
         self.notebook = notebook
@@ -37,7 +46,17 @@ class ConnectionTab(ttk.Frame):
 
     def create_userpass_widgets(self):
         # Define the Username Box
-        self.username_label = ttk.Label(self.tab, text="Username:")
+        ```
+        """Creates and configures username and password input widgets for a user interface.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method does not return anything, it modifies the instance's attributes.
+        """
+        
+        ```        self.username_label = ttk.Label(self.tab, text="Username:")
         self.username_label.pack()
         self.username_entry = ttk.Entry(self.tab)
         self.username_entry.pack(pady=5)
@@ -48,10 +67,46 @@ class ConnectionTab(ttk.Frame):
         self.password_entry.pack(pady=5)
 
     def read_devices_file(self, filename):
-        try:
+        """Reads a CSV file containing device information and returns a list of devices.
+        
+        Args:
+            filename (str): The path to the CSV file to be read.
+        
+        Returns:
+            list: A list of dictionaries, where each dictionary represents a device with its properties.
+                  Returns an empty list if the file is not found or cannot be read.
+        """        try:
             with open(filename) as file:
                 reader = csv.DictReader(file)
                 devices = list(reader)
+                """
+                Creates SSH widgets for each device in the device list.
+                
+                Args:
+                    self: The instance of the class containing this method.
+                
+                Returns:
+                    """
+                    Selects and establishes a connection based on the provided connection type and parameters.
+                    
+                    Args:
+                        self: The instance of the class containing this method.
+                        **kwargs (dict): A dictionary of keyword arguments containing connection parameters.
+                            Possible keys include:
+                            - host (str): The hostname or IP address for SSH connection.
+                            - connection_type (str): The type of connection ('Serial' or 'SSH').
+                            - port (str): The port for Serial connection.
+                            - baudrate (int): The baudrate for Serial connection.
+                    
+                    Returns:
+                        None: This method doesn't return anything, but it performs the following actions:
+                            - For Serial connection: Prints connection details.
+                            - For SSH connection: Establishes an SSH connection, creates a new tab in the notebook
+                              with an interactive terminal, and sets up the necessary GUI elements.
+                            - For invalid connection types: Prints an error message.
+                    """
+                    None: This method doesn't return anything, it updates the GUI by creating widgets.
+                """
                 return devices
         except FileNotFoundError as e:
             error_message = f"Error: Failed to open '{filename}': {str(e)}"
@@ -74,7 +129,14 @@ class ConnectionTab(ttk.Frame):
                 button = self.create_button(self.tab, button_text, self.select_connection, connection_type=connection_type, host=host)
         
     def create_serial_widgets(self):
-        for row in self.devices:
+        """Creates serial connection widgets for devices with 'Serial' connection type.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it creates buttons in the GUI.
+        """        for row in self.devices:
             device_label = row['device_label']
             connection_type = row['connection_type']
             host = row['host']
@@ -82,6 +144,17 @@ class ConnectionTab(ttk.Frame):
                 button_text = f"{device_label} - {connection_type} {host}"
                 self.create_button(self.tab, button_text, self.select_connection, connection_type=connection_type, host=host)
     def create_button(self, parent, text, command, **kwargs):
+        """Creates and packs a button widget with the specified text and command.
+        
+        Args:
+            parent (tk.Widget): The parent widget to which the button will be added.
+            text (str): The text to be displayed on the button.
+            command (callable): The function to be called when the button is clicked.
+            **kwargs: Additional keyword arguments to be passed to the command function.
+        
+        Returns:
+            None: This method does not return anything, but it creates and packs a button widget.
+        """
         button = ttk.Button(parent, text=text, command=lambda: command(**kwargs))
         button.pack()
 
@@ -109,7 +182,17 @@ class ConnectionTab(ttk.Frame):
             command_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
             send_button = tk.Button(ssh_session_tab, text="Send", command=lambda: send_command(output_text, command_entry, ssh_client))
             send_button.pack(side=tk.LEFT)
-            transport = ssh_client.get_transport()
+            """Sends a command to either an SSH client or an AI assistant and displays the output.
+            
+            Args:
+                output_text (tk.Text): The text widget to display the command output.
+                command_entry (tk.Entry): The entry widget containing the command to be sent.
+                ssh_client (paramiko.SSHClient, optional): The SSH client to execute commands on. Defaults to None.
+                ai_question_entry (str, optional): The entry for AI-related questions. Defaults to None.
+            
+            Returns:
+                None: This function doesn't return anything, it updates the GUI directly.
+            """            transport = ssh_client.get_transport()
             hostname = transport.getpeername()[0]
             ai_question_entry = None
 ##            if ai_question_entry:
@@ -154,6 +237,25 @@ class ConnectionTab(ttk.Frame):
             print("Invalid connection type")
             
     def create_configure_button(self):
+        """
+        Creates and packs a button for configuring a custom connection.
+        
+        Args:
+            """Configures a custom connection by creating a dialog window for user input.
+            
+            Args:
+                self: The instance of the class containing this method.
+            
+            Returns:
+                None: This method doesn't return anything, but it creates a new window for custom connection configuration,
+                adds the entered device information to the devices list, creates a new device button,
+                appends the device information to a CSV file, and closes the custom window upon saving.
+            """
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it creates and packs a button in the GUI.
+        """
         configure_button = ttk.Button(self.tab, text="Configure Custom Connection", command=self.configure_custom_connection)
         configure_button.pack()
 
@@ -168,6 +270,18 @@ class ConnectionTab(ttk.Frame):
     
         ttk.Label(custom_window, text="Connection Type:").pack()
         connection_type_var = tk.StringVar(value="SSH")
+        """Saves a new device with the provided information.
+        
+        Args:
+            None
+        
+        Returns:
+            None: This function doesn't return anything, but it performs the following actions:
+                - Appends the device information to the devices list
+                - Creates a button for the device in the UI
+                - Appends the device information to the 'devices.csv' file
+                - Closes the custom window used for input
+        """
         connection_type_dropdown = ttk.Combobox(custom_window, textvariable=connection_type_var, values=["SSH", "Serial"])
         connection_type_dropdown.pack()
     
@@ -210,10 +324,30 @@ class ConnectionTab(ttk.Frame):
         custom_window.mainloop()
 
     def set_username_placeholder(self, event):
+        """
+        Sets a placeholder text for the username entry field.
+        
+        Args:
+            self: The instance of the class containing this method.
+            event: tkinter.Event: The event object triggered by the focus out event.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         if not self.username_entry.get():
             self.username_entry.insert(0, "Username")
 
     def set_password_placeholder(self, event):
+        """
+        Sets a placeholder text in the password entry field if it's empty.
+        
+        Args:
+            self: The instance of the class containing this method.
+            event: The event object triggered by the user action (not used in the method body).
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         if not self.password_entry.get():
             self.password_entry.insert(0, "Password")
 
