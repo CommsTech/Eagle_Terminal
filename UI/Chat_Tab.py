@@ -15,6 +15,14 @@ class Chat_Tab(ttk.Frame):
     self.pack(fill=tk.BOTH, expand=True)  # Pack the frame to fill the parent space
 
     def send_message(self):
+        """Sends a message to GPT-4 and displays the response in the output text box.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it updates the GUI directly.
+        """
         message = self.input_text_box.get("1.0", tk.END).strip()
         
         if message:
@@ -25,7 +33,14 @@ class Chat_Tab(ttk.Frame):
             self.output_text_box.insert(tk.END, f"User: {message}\n")
             self.output_text_box.insert(tk.END, f"GPT-4: {response}\n")
             
-            # Clear input text box
+            """Gets a response from GPT-4 for the given message.
+            
+            Args:
+                message (str): The input message to be processed by GPT-4.
+            
+            Returns:
+                str: The response from GPT-4, currently implemented as the reversed input message.
+            """            # Clear input text box
             self.input_text_box.delete("1.0", tk.END)
     
     def get_gpt4_response(self, message):
@@ -37,6 +52,14 @@ class Chat_Tab(ttk.Frame):
 
 
     def create_ai_button(self):
+        """Creates and configures AI-related GUI elements for user interaction.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it modifies the GUI directly.
+        """
         ai_question_entry = tk.Entry(self.tab)
         ai_question_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
         ai_input_button = tk.Button(text="Ask Chief", command=lambda: Chief.quick_prompt(ai_question_entry))
