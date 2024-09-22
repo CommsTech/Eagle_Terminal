@@ -26,6 +26,16 @@ Chief = Chief()
 
 class ConnectionTab:
     def __init__(self, parent, notebook):
+        """
+        Initializes the Connections tab within the parent notebook.
+        
+        Args:
+            parent (ttk.Notebook): The parent notebook widget.
+            notebook (ttk.Notebook): The notebook widget to which this tab will be added.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         self.parent = notebook
         self.notebook = notebook
         self.tab = ttk.Frame(self.parent)
@@ -37,6 +47,15 @@ class ConnectionTab:
         self.create_configure_button()
 
     def create_userpass_widgets(self):
+        """
+        Creates and packs username and password input widgets for the user interface.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it modifies the instance attributes.
+        """
         self.username_label = ttk.Label(self.tab, text="Username:")
         self.username_label.pack()
 
@@ -50,6 +69,15 @@ class ConnectionTab:
         self.password_entry.pack(pady=5)
 
     def read_devices_file(self, filename):
+        """Reads device information from a CSV file.
+        
+        Args:
+            filename (str): The path to the CSV file containing device information.
+        
+        Returns:
+            list: A list of dictionaries, where each dictionary represents a device with its properties.
+                  Returns an empty list if the file is not found or cannot be read.
+        """
         try:
             with open(filename) as csvfile:
                 reader = csv.DictReader(csvfile)
@@ -62,7 +90,14 @@ class ConnectionTab:
 
     def create_ssh_widgets(self):
         # Get the status for the current device
-        for device in self.devices:
+        """Create SSH widgets for each device in the list.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it creates and packs widgets directly.
+        """        for device in self.devices:
             # Create the device widget
             device_widget = ttk.Frame(self.tab)
             device_widget.pack()
@@ -77,6 +112,36 @@ class ConnectionTab:
 
     def create_serial_widgets(self):
         # Creates serial widgets based on the devices in the self.devices list.
+        """Creates serial widgets for devices with 'Serial' connection type.
+"""
+Creates and packs a button widget with the specified text and command.
+
+Args:
+    """
+    Selects and establishes a connection based on the provided connection type and parameters.
+    
+    Args:
+        self: The instance of the class containing this method.
+        **kwargs: dict: Additional keyword arguments for connection parameters.
+    
+    Returns:
+        None: This method doesn't return a value, but it performs various actions based on the connection type.
+    """
+    parent (tk.Widget): The parent widget to which the button will be added.
+    text (str): The text to be displayed on the button.
+    command (callable): The function to be called when the button is clicked.
+    **kwargs: Additional keyword arguments to be passed to the command function.
+
+Returns:
+    None: This method doesn't return anything, but creates and packs a button widget.
+"""
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method does not return any value.
+        """
         for row in self.devices:
             device_label = row['device_label']
             connection_type = row['connection_type']
@@ -90,6 +155,17 @@ class ConnectionTab:
 
     def select_connection(self, **kwargs):
         username = self.username_entry.get()
+        """Sends a command to either an SSH client or an AI assistant and displays the output.
+        
+        Args:
+            output_text (tk.Text): The text widget to display the command output.
+            command_entry (tk.Entry): The entry widget containing the command to be sent.
+            ssh_client (paramiko.SSHClient, optional): The SSH client to execute commands on. Defaults to None.
+            ai_question_entry (str, optional): The entry widget for AI-related questions. Defaults to None.
+        
+        Returns:
+            None: This function doesn't return a value, it updates the GUI directly.
+        """
         password = self.password_entry.get()
         host = kwargs.get("host")
         connection_type = kwargs.get("connection_type")
@@ -151,10 +227,28 @@ class ConnectionTab:
             print("Invalid connection type")
 
     def create_configure_button(self):
+        """Creates and configures a button for custom connection configuration.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it creates and packs a button widget.
+        """
         configure_button = ttk.Button(self.tab, text="Configure Custom Connection", command=self.configure_custom_connection)
         configure_button.pack()
 
     def configure_custom_connection(self):
+        """Configures a custom connection by creating a new window for user input.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, but it creates a new window,
+            adds the entered device to the devices list, creates a new button for the device,
+            and saves the device information to a CSV file.
+        """
         custom_window = tk.Toplevel(self.parent)
         custom_window.title("Custom Connection")
 
@@ -174,6 +268,18 @@ class ConnectionTab:
 
         # Function to save the device information
         def save_device():
+            """Saves a new device to the application's device list and CSV file.
+            
+            Args:
+                None
+            
+            Returns:
+                None: This function doesn't return anything, but it performs the following actions:
+                    - Adds the device information to the devices list
+                    - Creates a button for the device in the UI
+                    - Appends the device information to the 'devices.csv' file
+                    - Closes the custom window used for input
+            """
             device_label = device_label_entry.get()
             connection_type = connection_type_var.get()
             host = host_entry.get()
@@ -206,7 +312,25 @@ class ConnectionTab:
         custom_window.mainloop()
 
     def set_username_placeholder(self):
-        if not self.username_entry.get():
+        """Sets a placeholder text in the username entry field if it's empty.
+        
+        Args:
+            self: The instance of the class containing this method.
+"""Sets a placeholder text for the password entry field.
+
+This method checks if the password entry field is empty and inserts the
+placeholder text "Password" if it is.
+
+Args:
+    self: The instance of the class containing this method.
+
+Returns:
+    None: This method doesn't return anything.
+"""
+        
+        Returns:
+            None: This method doesn't return anything.
+        """        if not self.username_entry.get():
             self.username_entry.insert(0, "Username")
 
     def set_password_placeholder(self):
@@ -218,6 +342,29 @@ gui_closed = False
 
 
 def close_python_subprocesses():
+    """Terminates all running Python subprocesses.
+    
+    """Handles the closing of the GUI window and performs cleanup tasks.
+    
+    Args:
+        None
+    
+    Returns:
+        None: This function doesn't return anything, but it performs several side effects:
+            - Terminates the Chief_AI.py program
+            - Sets a global flag indicating the GUI is closed
+            - Destroys the root window
+            - Closes Python subprocesses
+    """
+    This function iterates through all running processes, identifies those with the name
+    "python.exe", and attempts to terminate them.
+    
+    Args:
+        None
+    
+    Returns:
+        None: This function does not return any value.
+    """
     for proc in psutil.process_iter():
         try:
             if proc.name() == "python.exe":
