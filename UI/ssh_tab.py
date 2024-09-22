@@ -4,6 +4,26 @@ from ssh.ssh_manager import SSHManager
 
 class SSHTab(ttk.Frame):
     def __init__(self, parent):
+        """Initialize a new instance of the class.
+        
+        Args:
+            parent: The parent object or widget to which this instance is attached.
+        
+        """
+        Creates a graphical user interface for SSH connection input.
+        
+        This method sets up labels and entry fields for hostname, port, username, and password,
+        as well as a connect button. It uses the tkinter grid layout manager to organize the elements.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, it modifies the instance's attributes.
+        """
+        Returns:
+            None: This method doesn't return anything.
+        """
         super().__init__(parent)
         self.ssh_manager = SSHManager()
         self.create_connection_interface()
@@ -26,7 +46,14 @@ class SSHTab(ttk.Frame):
         self.username_entry.grid(column=1, row=2)
 
         self.password_label = tk.Label(self, text="Password:")
-        self.password_label.grid(column=0, row=3, sticky=tk.W)
+        """Establishes an SSH connection using provided credentials.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None: This method doesn't return anything, but prints a status message.
+        """        self.password_label.grid(column=0, row=3, sticky=tk.W)
         self.password_entry = tk.Entry(self, show="*")
         self.password_entry.grid(column=1, row=3)
 
