@@ -5,6 +5,14 @@ from UI.ssh_tab import SSHTab
 
 class MainWindow(ttk.Frame):
     def __init__(self, parent):
+        """Initializes the main application window and sets up the tab control.
+        
+        Args:
+            parent (tk.Tk): The parent window for this application.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         super().__init__(parent)
         parent.title('EagleTerm_v0.2')
 
@@ -16,6 +24,33 @@ class MainWindow(ttk.Frame):
 
         self.create_new_tab_button = tk.Button(self, text='+', command=self.add_new_tab)
         self.create_new_tab_button.pack(side='left')
+"""Adds a new SSH tab to the application interface.
+
+Args:
+    None
+
+"""
+Adds a new tab to the interface by creating a new SSH tab.
+
+This method is a wrapper around the add_new_ssh_tab method, simplifying the process of adding a new tab with SSH functionality.
+
+Args:
+    self: The instance of the class containing this method.
+
+Returns:
+    None: This method doesn't return anything, it modifies the interface by adding a new tab.
+"""
+Returns:
+    None: This method doesn't return anything, but it creates and displays a new SSH tab in the interface.
+"""
+"""Removes a tab from the tab control.
+
+Args:
+    index (int, optional): The index of the tab to be removed. If not provided, the currently selected tab will be removed.
+
+Returns:
+    None: This method doesn't return anything.
+"""
 
         self.tab_control.pack(expand=True, fill='both')
         self.add_new_ssh_tab()
