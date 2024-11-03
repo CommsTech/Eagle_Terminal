@@ -14,6 +14,7 @@ from paramiko.ssh_exception import (
     AuthenticationException,
     BadHostKeyException,
     SSHException,
+    PermissionDenied,
 )
 
 from utils.logging_config import logger

@@ -2,6 +2,7 @@ import logging
 import socket
 
 from PyQt5.QtWidgets import QListWidget, QMessageBox, QPushButton, QVBoxLayout, QWidget
+from utils.network_utils import scan_network  # Assuming this is the correct path
 
 logging.basicConfig(level=logging.ERROR)
 

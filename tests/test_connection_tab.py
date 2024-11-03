@@ -6,6 +6,7 @@ from PyQt5 import QtCore, QtTest, QtWidgets
 from ai.chief import Chief
 from ui.tabs.ssh_tab import SSHTab
 from utils.logger import logger
+from core.ssh import SSHConnection
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)

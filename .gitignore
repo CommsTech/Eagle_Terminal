@@ -70,6 +70,9 @@ Thumbs.db
 # Eagle Terminal specific
 encrypted_devices.dat
 secret.key
+*.key
+notes_key.key
+
 
 # Encrypted devices file and key
 devices.enc
@@ -91,3 +94,84 @@ model_cache/
 .model_cache/
 ai/saved_model/model.safetensors
 /user_data/
+
+# Additional Python ML/DL specific
+*.ckpt
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+transformers_cache/
+.transformers_cache/
+.pytorch_cache/
+lightning_logs/
+wandb/
+runs/
+tensorboard_logs/
+
+# SSH and Security related
+*.pem
+*.crt
+*.csr
+*.key
+known_hosts
+id_rsa*
+*.ppk
+ssh_config
+
+# Logs and debugging
+*.log
+debug/
+logs/
+profiling_results/
+*.trace
+*.profile
+
+# Ansible specific
+*.retry
+ansible/*.retry
+inventory.yml
+host_vars/*.yml
+group_vars/*.yml
+
+# Application specific
+config.yml
+settings.json
+user_preferences.json
+connection_history.json
+*.session
+meshtastic_cache/
+radio_logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# Documentation build
+docs/_build/
+site/
+mkdocs_build/
+
+# Test data
+test_data/
+mock_data/
+fixtures/
+
+# Crash reports
+crash_reports/
+error_dumps/
+*.stackdump
+
+# Compiled UI files
+*.ui.py
+*_ui.py
+*_rc.py
