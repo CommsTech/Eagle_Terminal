@@ -13,6 +13,22 @@ from utils.logger import logger
 
 class MacroManager:
     def __init__(self, macro_file: str = "macros.json"):
+        """Initialize the MacroManager.
+        
+        This method initializes a MacroManager object, setting up the necessary attributes
+        and loading existing macros from a file.
+        
+        Args:
+            macro_file (str, optional): The path to the JSON file containing saved macros.
+                                        Defaults to "macros.json".
+        
+        Returns:
+            None
+        
+        Raises:
+            FileNotFoundError: If the specified macro file does not exist.
+            json.JSONDecodeError: If the macro file contains invalid JSON.
+        """
         self.macro_file = macro_file
         self.macros: Dict[str, List[str]] = {}
         self.current_macro: List[str] = []
