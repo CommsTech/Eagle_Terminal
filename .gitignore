@@ -90,3 +90,4 @@ saved_model/
 model_cache/
 .model_cache/
 ai/saved_model/model.safetensors
+/user_data/
