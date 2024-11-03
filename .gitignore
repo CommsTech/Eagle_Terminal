@@ -1,7 +1,9 @@
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
 *.so
+
+# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -15,72 +17,76 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
+# PyInstaller
 *.manifest
 *.spec
+
+# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
+# Unit test / coverage reports
 htmlcov/
 .tox/
-.nox/
 .coverage
 .coverage.*
 .cache
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
 .hypothesis/
 .pytest_cache/
-*.mo
-*.pot
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-instance/
-.webassets-cache
-.scrapy
-docs/_build/
-doc/build/
-doc/_build/
-build/doctrees
-build/html
-build/latex
-build/man
-build/texinfo
-build/epub
-build/dirhtml
-build/xml
-build/pickle
-build/json
-target/
-.ipynb_checkpoints
-profile_default/
-ipython_config.py
-.python-version
-celerybeat-schedule
-*.sage.py
+
+# Environments
 .env
 .venv
+env/
 venv/
+venv_310/
 ENV/
 env.bak/
 venv.bak/
-.spyderproject
-.ropeproject
-/site
-.mypy_cache/
-.dmypy.json
-dmypy.json
-.pyre/
-.pytype/
-cython_debug/
-*.db
-/.Next_Version_Prestage/
-/Model/*
-*.gguf
+
+# IDE specific files
+.vscode/
+.idea/
+.cursorrules
+.cursorignore
+*.code-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Eagle Terminal specific
+encrypted_devices.dat
+secret.key
+
+# Encrypted devices file and key
+devices.enc
+device_key.key
+device_notes.enc
+devices.json
+
+# Open-Webui secrets
+open_webui_secrets.json
+
+# Model files and directories
+/ai/saved_model/
+saved_model/
+*.pt
+*.pth
+*.bin
+*.onnx
+model_cache/
+.model_cache/
+ai/saved_model/model.safetensors

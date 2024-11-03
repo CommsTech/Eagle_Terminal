@@ -1,0 +1,7 @@
+site_name: Eagle Terminal Documentation
+nav:
+  - Home: index.md
+  - User Guide: user-guide.md
+  - API Reference: api-reference.md
+
+theme: readthedocs

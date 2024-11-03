@@ -1,0 +1,122 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: security_scan
+    image: python:3.11
+    commands:
+      - pip install -r requirements.txt
+      - pip install bandit safety
+      - bandit -r . -f custom
+      - safety check
+    when:
+      event:
+        - push
+        - pull_request
+      branch:
+        - main
+        - develop
+
+  - name: test
+    image: python:${PYTHON_VERSION}
+    commands:
+      - pip install -r requirements.txt
+      - pip install pytest
+      - pytest
+    when:
+      event:
+        - push
+        - pull_request
+    matrix:
+      PYTHON_VERSION:
+        - 3.10
+        - 3.11
+        - 3.12
+
+  - name: build
+    image: python:3.11
+    commands:
+      - pip install -r requirements.txt
+      - pip install pyinstaller
+      - pyinstaller --onefile Eagle_Terminal.py
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  - name: upload_artifact
+    image: appleboy/drone-scp
+    settings:
+      host: 
+        from_secret: gitea_host
+      username: 
+        from_secret: gitea_username
+      key: 
+        from_secret: gitea_ssh_key
+      target: /path/to/artifacts
+      source: dist/Eagle_Terminal*
+    when:
+      event:
+        - push
+      branch:
+        - main
+        - develop
+
+  - name: update_docs
+    image: python:3.11
+    commands:
+      - pip install mkdocs
+      - mkdocs build
+    when:
+      event:
+        - push
+      branch:
+        - main
+
+  - name: deploy_docs
+    image: appleboy/drone-scp
+    settings:
+      host: 
+        from_secret: gitea_host
+      username: 
+        from_secret: gitea_username
+      key: 
+        from_secret: gitea_ssh_key
+      target: /path/to/gitea/wiki
+      source: site/*
+    when:
+      event:
+        - push
+      branch:
+        - main
+
+trigger:
+  event:
+    - push
+    - pull_request
+  branch:
+    - main
+    - develop
+
+---
+kind: pipeline
+type: docker
+name: nightly_security_scan
+
+steps:
+  - name: security_scan
+    image: python:3.11
+    commands:
+      - pip install -r requirements.txt
+      - pip install bandit safety
+      - bandit -r . -f custom
+      - safety check
+
+trigger:
+  event:
+    - cron
+  cron:
+    - nightly
