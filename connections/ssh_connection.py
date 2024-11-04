@@ -95,7 +95,7 @@ class SSHConnection:
 
     def _get_history(self) -> str:
         history = "\n".join(
-            f"{i+1}  {cmd}" for i, cmd in enumerate(self.session_history)
+            f"{i + 1}  {cmd}" for i, cmd in enumerate(self.session_history)
         )
         return history
 
@@ -172,7 +172,7 @@ class SSHConnection:
                 if self.shell.recv_ready():
                     chunk = self.shell.recv(4096).decode("utf-8")
                     output += chunk
-                    if command in output and "\n" in output[output.index(command) :]:
+                    if command in output and "\n" in output[output.index(command):]:
                         break
                 time.sleep(0.1)
             return output

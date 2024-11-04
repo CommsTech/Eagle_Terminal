@@ -1,12 +1,6 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QComboBox,
-    QLabel,
-    QLineEdit,
-    QVBoxLayout,
-    QWizard,
-    QWizardPage,
-)
+from PyQt5.QtWidgets import (QComboBox, QLabel, QLineEdit, QVBoxLayout,
+                             QWizard, QWizardPage)
 
 
 class NewConnectionWizard(QWizard):

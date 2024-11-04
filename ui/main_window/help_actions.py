@@ -3,16 +3,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from PyQt5.QtCore import Qt, QUrl
     from PyQt5.QtGui import QDesktopServices
-    from PyQt5.QtWidgets import (
-        QAction,
-        QDialog,
-        QListWidget,
-        QMessageBox,
-        QPushButton,
-        QTextBrowser,
-        QTextEdit,
-        QVBoxLayout,
-    )
+    from PyQt5.QtWidgets import (QAction, QDialog, QListWidget, QMessageBox,
+                                 QPushButton, QTextBrowser, QTextEdit,
+                                 QVBoxLayout)
 else:
     from PyQt5.QtCore import Qt, QUrl
     from PyQt5.QtGui import QDesktopServices

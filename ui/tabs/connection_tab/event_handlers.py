@@ -30,7 +30,7 @@ def on_terminal_change(self):
         cursor.setPosition(self.terminal.document().characterCount())
         self.terminal.setTextCursor(cursor)
 
-    current_command = self.terminal.toPlainText()[self.command_start_position :]
+    current_command = self.terminal.toPlainText()[self.command_start_position:]
     if self.chief_enabled:
         self.chief.analyze_command(current_command)
 

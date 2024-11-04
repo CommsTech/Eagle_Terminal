@@ -10,12 +10,8 @@ from paramiko.agent import Agent
 from paramiko.channel import Channel
 from paramiko.client import AutoAddPolicy, SSHClient
 from paramiko.pkey import PKey
-from paramiko.ssh_exception import (
-    AuthenticationException,
-    BadHostKeyException,
-    SSHException,
-    PermissionDenied,
-)
+from paramiko.ssh_exception import (AuthenticationException,
+                                    BadHostKeyException, SSHException)
 
 from utils.logging_config import logger
 

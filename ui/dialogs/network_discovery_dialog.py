@@ -1,13 +1,5 @@
-from PyQt5.QtWidgets import (
-    QButtonGroup,
-    QDialog,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QPushButton,
-    QRadioButton,
-    QVBoxLayout,
-)
+from PyQt5.QtWidgets import (QButtonGroup, QDialog, QHBoxLayout, QLabel,
+                             QLineEdit, QPushButton, QRadioButton, QVBoxLayout)
 
 
 class NetworkDiscoveryDialog(QDialog):

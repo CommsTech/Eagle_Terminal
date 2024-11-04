@@ -5,24 +5,15 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QSize, Qt, QTimer, pyqtSlot  # type: ignore
 from PyQt5.QtGui import QIcon  # type: ignore
 from PyQt5.QtWidgets import QDialog  # type: ignore
-from PyQt5.QtWidgets import (
-    QAction,
-    QApplication,
-    QMainWindow,
-    QMessageBox,
-    QSplitter,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QAction, QApplication, QMainWindow, QMessageBox,
+                             QSplitter, QTabWidget, QVBoxLayout, QWidget)
 from qasync import QEventLoop, asyncSlot
 
 from ai.chief import Chief
 from plugins.meshtastic_chat import MeshtasticChat
 from scripts.chief_learning import start_learning_session
-from ui.dialogs.local_ai_dialog import (
-    LocalAIDialog,
-)  # You'll need to create this dialog
+from ui.dialogs.local_ai_dialog import \
+    LocalAIDialog  # You'll need to create this dialog
 from ui.dialogs.new_connection_wizard import NewConnectionWizard
 from ui.dialogs.quick_connect_dialog import QuickConnectDialog
 from ui.dialogs.remote_file_browser_dialog import RemoteFileBrowserDialog

@@ -1,18 +1,9 @@
 import logging
 
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import (
-    QComboBox,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QListWidget,
-    QMessageBox,
-    QPushButton,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit,
+                             QListWidget, QMessageBox, QPushButton, QTextEdit,
+                             QVBoxLayout, QWidget)
 
 
 class MeshtasticChatTab(QWidget):

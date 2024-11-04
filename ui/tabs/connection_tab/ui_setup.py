@@ -1,12 +1,5 @@
-from PyQt5.QtWidgets import (
-    QComboBox,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QPushButton,
-    QTextEdit,
-    QVBoxLayout,
-)
+from PyQt5.QtWidgets import (QComboBox, QHBoxLayout, QLabel, QLineEdit,
+                             QPushButton, QTextEdit, QVBoxLayout)
 
 
 def setup_ui(self):

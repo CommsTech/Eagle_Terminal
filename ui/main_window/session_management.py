@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QMessageBox
 from ui.dialogs.new_connection_wizard import NewConnectionWizard
 from ui.dialogs.quick_connect_dialog import QuickConnectDialog
 from ui.tabs.ssh_tab import SSHTab
-from ui.tabs.shell_tab import ShellTab
 from utils.logger import logger
 
 

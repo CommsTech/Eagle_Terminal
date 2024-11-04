@@ -3,10 +3,10 @@ import os
 
 import pytest
 from PyQt5 import QtCore, QtTest, QtWidgets
+
 from ai.chief import Chief
 from ui.tabs.ssh_tab import SSHTab
 from utils.logger import logger
-from core.ssh import SSHConnection
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -38,15 +38,15 @@ def ssh_tab(qapp, qtbot, monkeypatch):
         "hostname": "test.example.com",
         "username": "test_user",
         "password": "test_password",
-        "port": 22
+        "port": 22,
     }
 
     tab = SSHTab(None)
     tab.chief = chief
     tab.session_data = session_data
 
-    monkeypatch.setattr(tab, 'connect', lambda: None)
-    monkeypatch.setattr(tab, 'disconnect', lambda: None)
+    monkeypatch.setattr(tab, "connect", lambda: None)
+    monkeypatch.setattr(tab, "disconnect", lambda: None)
 
     return tab
 

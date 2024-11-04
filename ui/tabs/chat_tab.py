@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (QLineEdit, QPushButton, QTextEdit, QVBoxLayout,
+                             QWidget)
 
 
 class Chat_Tab(QWidget):

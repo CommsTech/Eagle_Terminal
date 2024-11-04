@@ -3,16 +3,8 @@ import os
 import paramiko
 from PyQt5.QtCore import QMimeData, Qt
 from PyQt5.QtGui import QDrag
-from PyQt5.QtWidgets import (
-    QFileSystemModel,
-    QInputDialog,
-    QMessageBox,
-    QPushButton,
-    QTreeView,
-    QVBoxLayout,
-    QWidget,
-    QFileDialog,
-)
+from PyQt5.QtWidgets import (QFileSystemModel, QInputDialog, QMessageBox,
+                             QPushButton, QTreeView, QVBoxLayout, QWidget)
 
 
 class RemoteFileSystemModel(QFileSystemModel):

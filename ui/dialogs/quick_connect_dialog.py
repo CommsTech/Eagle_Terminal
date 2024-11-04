@@ -1,11 +1,5 @@
-from PyQt5.QtWidgets import (
-    QDialog,
-    QDialogButtonBox,
-    QFormLayout,
-    QLineEdit,
-    QPushButton,
-    QVBoxLayout,
-)
+from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QFormLayout, QLineEdit,
+                             QPushButton, QVBoxLayout)
 
 
 class QuickConnectDialog(QDialog):

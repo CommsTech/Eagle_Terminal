@@ -12370,26 +12370,14 @@ TypeError: expected str, bytes or os.PathLike object, not NoneType
 2024-11-03 09:56:37,706 - eagle_terminal - INFO - Loaded script: download_model
 2024-11-03 09:57:37,707 - eagle_terminal - DEBUG - Checking devices status
 2024-11-03 09:57:52,551 - eagle_terminal - INFO - Closing application
-2024-11-03 11:18:58,682 - eagle_terminal - INFO - Chief components initialized successfully
-2024-11-03 11:19:00,693 - eagle_terminal - DEBUG - Setting up MainWindow components
-2024-11-03 11:19:00,708 - eagle_terminal - DEBUG - Menu bar set up
-2024-11-03 11:19:00,708 - eagle_terminal - WARNING - Meshtastic library not found. Meshtastic Chat feature will not be available.
-2024-11-03 11:19:00,822 - eagle_terminal - DEBUG - Toolbar set up
-2024-11-03 11:19:00,822 - eagle_terminal - DEBUG - Setting up UI
-2024-11-03 11:19:00,823 - eagle_terminal - DEBUG - UI setup complete
-2024-11-03 11:19:00,823 - eagle_terminal - INFO - Loading plugins from C:\Users\commstech\Github\Test\Eagle_Terminal\plugins
-2024-11-03 11:19:00,827 - eagle_terminal - INFO - Loaded script: chief_learning
-2024-11-03 11:19:00,829 - eagle_terminal - INFO - Loaded script: download_model
-2024-11-03 11:19:03,070 - eagle_terminal - INFO - Closing application
-2024-11-03 11:29:23,885 - eagle_terminal - INFO - Chief components initialized successfully
-2024-11-03 11:29:25,193 - eagle_terminal - DEBUG - Setting up MainWindow components
-2024-11-03 11:29:25,208 - eagle_terminal - DEBUG - Menu bar set up
-2024-11-03 11:29:25,208 - eagle_terminal - WARNING - Meshtastic library not found. Meshtastic Chat feature will not be available.
-2024-11-03 11:29:25,255 - eagle_terminal - DEBUG - Toolbar set up
-2024-11-03 11:29:25,255 - eagle_terminal - DEBUG - Setting up UI
-2024-11-03 11:29:25,255 - eagle_terminal - DEBUG - UI setup complete
-2024-11-03 11:29:25,255 - eagle_terminal - INFO - Loading plugins from C:\Users\commstech\Github\Test\Eagle_Terminal\plugins
-2024-11-03 11:29:25,271 - eagle_terminal - INFO - Loaded script: chief_learning
-2024-11-03 11:29:25,271 - eagle_terminal - INFO - Loaded script: download_model
-2024-11-03 11:30:25,266 - eagle_terminal - DEBUG - Checking devices status
-2024-11-03 11:30:35,103 - eagle_terminal - INFO - Closing application
+2024-11-03 18:18:42,048 - eagle_terminal - INFO - Chief components initialized successfully
+2024-11-03 18:18:44,008 - eagle_terminal - DEBUG - Setting up MainWindow components
+2024-11-03 18:18:44,021 - eagle_terminal - DEBUG - Menu bar set up
+2024-11-03 18:18:44,023 - eagle_terminal - WARNING - Meshtastic library not found. Meshtastic Chat feature will not be available.
+2024-11-03 18:18:44,074 - eagle_terminal - DEBUG - Toolbar set up
+2024-11-03 18:18:44,075 - eagle_terminal - DEBUG - Setting up UI
+2024-11-03 18:18:44,075 - eagle_terminal - DEBUG - UI setup complete
+2024-11-03 18:18:44,076 - eagle_terminal - INFO - Loading plugins from C:\Users\commstech\Github\Test\Eagle_Terminal\plugins
+2024-11-03 18:18:44,080 - eagle_terminal - INFO - Loaded script: chief_learning
+2024-11-03 18:18:44,083 - eagle_terminal - INFO - Loaded script: download_model
+2024-11-03 18:18:46,736 - eagle_terminal - INFO - Closing application

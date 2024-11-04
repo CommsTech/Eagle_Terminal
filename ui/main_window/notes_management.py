@@ -3,7 +3,8 @@ import os
 
 from cryptography.fernet import Fernet
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QComboBox, QDialog, QPushButton, QTextEdit, QVBoxLayout
+from PyQt5.QtWidgets import (QComboBox, QDialog, QPushButton, QTextEdit,
+                             QVBoxLayout)
 
 from utils.logger import logger
 

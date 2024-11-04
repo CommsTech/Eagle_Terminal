@@ -6,16 +6,8 @@ import paramiko
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QObject, Qt, pyqtSignal
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import (
-    QAction,
-    QDialog,
-    QFileDialog,
-    QInputDialog,
-    QMessageBox,
-    QToolBar,
-    QTreeView,
-    QVBoxLayout,
-)
+from PyQt5.QtWidgets import (QAction, QDialog, QFileDialog, QInputDialog,
+                             QMessageBox, QToolBar, QTreeView, QVBoxLayout)
 from qasync import asyncSlot
 
 from utils.logger import logger

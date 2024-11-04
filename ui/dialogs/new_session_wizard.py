@@ -2,34 +2,16 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from PyQt5.QtCore import Qt
-    from PyQt5.QtWidgets import (
-        QCheckBox,
-        QComboBox,
-        QFileDialog,
-        QFormLayout,
-        QHBoxLayout,
-        QLabel,
-        QLineEdit,
-        QPushButton,
-        QVBoxLayout,
-        QWizard,
-        QWizardPage,
-    )
+    from PyQt5.QtWidgets import (QCheckBox, QComboBox, QFileDialog,
+                                 QFormLayout, QHBoxLayout, QLabel, QLineEdit,
+                                 QPushButton, QVBoxLayout, QWizard,
+                                 QWizardPage)
 else:
     from PyQt5.QtCore import Qt
-    from PyQt5.QtWidgets import (
-        QCheckBox,
-        QComboBox,
-        QFileDialog,
-        QFormLayout,
-        QHBoxLayout,
-        QLabel,
-        QLineEdit,
-        QPushButton,
-        QVBoxLayout,
-        QWizard,
-        QWizardPage,
-    )
+    from PyQt5.QtWidgets import (QCheckBox, QComboBox, QFileDialog,
+                                 QFormLayout, QHBoxLayout, QLabel, QLineEdit,
+                                 QPushButton, QVBoxLayout, QWizard,
+                                 QWizardPage)
 
 
 class NewSessionWizard(QWizard):

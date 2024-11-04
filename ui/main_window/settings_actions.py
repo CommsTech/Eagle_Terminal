@@ -2,21 +2,10 @@ import json
 from typing import Any, Dict
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QCheckBox,
-    QComboBox,
-    QDialog,
-    QDialogButtonBox,
-    QFileDialog,
-    QFormLayout,
-    QInputDialog,
-    QLineEdit,
-    QMessageBox,
-    QPushButton,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox,
+                             QFileDialog, QFormLayout, QInputDialog, QLineEdit,
+                             QMessageBox, QPushButton, QTabWidget, QVBoxLayout,
+                             QWidget)
 
 from ui.dialogs.chief_settings_dialog import ChiefSettingsDialog
 from utils.logger import logger

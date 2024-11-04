@@ -5,7 +5,8 @@ import os
 from cryptography.fernet import Fernet
 from PyQt5.QtCore import Q_ARG, QMetaObject, QObject, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QAction, QInputDialog, QMenu, QMessageBox, QTreeWidgetItem
+from PyQt5.QtWidgets import (QAction, QInputDialog, QMenu, QMessageBox,
+                             QTreeWidgetItem)
 
 from ui.widgets.device_list import DeviceListWidget
 from ui.widgets.device_status_widget import DeviceStatusWidget

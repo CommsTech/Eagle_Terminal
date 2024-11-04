@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QLabel, QPushButton, QTextEdit, QVBoxLayout
+from PyQt5.QtWidgets import (QDialog, QLabel, QPushButton, QTextEdit,
+                             QVBoxLayout)
 
 
 class LocalAIDialog(QDialog):

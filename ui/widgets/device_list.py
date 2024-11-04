@@ -1,5 +1,6 @@
 from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QTreeWidget, QTreeWidgetItem
+from PyQt5.QtWidgets import (QListWidget, QListWidgetItem, QTreeWidget,
+                             QTreeWidgetItem)
 
 from .device_status_widget import DeviceStatusWidget
 

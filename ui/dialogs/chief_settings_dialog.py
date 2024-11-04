@@ -1,19 +1,8 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (
-    QCheckBox,
-    QDialog,
-    QDoubleSpinBox,
-    QFormLayout,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QMessageBox,
-    QPushButton,
-    QSpinBox,
-    QTabWidget,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QCheckBox, QDialog, QDoubleSpinBox, QFormLayout,
+                             QHBoxLayout, QLabel, QLineEdit, QMessageBox,
+                             QPushButton, QSpinBox, QTabWidget, QVBoxLayout,
+                             QWidget)
 
 from utils.logger import logger
 

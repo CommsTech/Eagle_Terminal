@@ -70,7 +70,7 @@ class SSHConsole(QTextEdit):
         cursor = self.textCursor()
         cursor.movePosition(QTextCursor.End)
         cursor.movePosition(QTextCursor.StartOfBlock, QTextCursor.KeepAnchor)
-        command = cursor.selectedText()[len(self.prompt) :].strip()
+        command = cursor.selectedText()[len(self.prompt):].strip()
 
         if command:
             self.append("")  # Move to the next line

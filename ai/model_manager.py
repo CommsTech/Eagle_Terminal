@@ -11,18 +11,11 @@ from datetime import datetime
 from typing import Any, Dict, List
 
 import torch
-from transformers import (
-    AutoModel,
-    AutoModelForCausalLM,
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    DistilBertForSequenceClassification,
-    DistilBertTokenizer,
-    GPT2LMHeadModel,
-    GPT2Tokenizer,
-    Trainer,
-    TrainingArguments,
-)
+from transformers import (AutoModel, AutoModelForCausalLM,
+                          AutoModelForSequenceClassification, AutoTokenizer,
+                          DistilBertForSequenceClassification,
+                          DistilBertTokenizer, GPT2LMHeadModel, GPT2Tokenizer,
+                          Trainer, TrainingArguments)
 
 from utils.logger import logger
 

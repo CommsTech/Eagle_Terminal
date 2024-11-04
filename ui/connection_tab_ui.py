@@ -1,13 +1,5 @@
-from PyQt5.QtWidgets import (
-    QComboBox,
-    QFormLayout,
-    QHBoxLayout,
-    QLineEdit,
-    QPushButton,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QComboBox, QFormLayout, QHBoxLayout, QLineEdit,
+                             QPushButton, QTextEdit, QVBoxLayout, QWidget)
 
 
 class ConnectionTabUI(QWidget):

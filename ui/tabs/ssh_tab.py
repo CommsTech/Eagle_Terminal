@@ -3,18 +3,9 @@ import re
 
 from PyQt5.QtCore import QObject, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QColor, QFont, QTextCursor
-from PyQt5.QtWidgets import (
-    QApplication,
-    QHBoxLayout,
-    QInputDialog,
-    QLineEdit,
-    QMessageBox,
-    QPushButton,
-    QSplitter,
-    QTextEdit,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt5.QtWidgets import (QApplication, QHBoxLayout, QInputDialog,
+                             QLineEdit, QMessageBox, QPushButton, QSplitter,
+                             QTextEdit, QVBoxLayout, QWidget)
 
 from ai.chief import Chief
 from utils.logger import logger
