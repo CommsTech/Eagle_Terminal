@@ -19,20 +19,20 @@ from utils.logging_config import logger
 class SSHConnection:
     def __init__(self, hostname, username, password=None, key_filename=None, port=22):
         """Initialize a new SSH connection object.
-        
+
         Args:
             hostname (str): The hostname or IP address of the SSH server.
             username (str): The username to authenticate with on the SSH server.
             password (str, optional): The password for authentication. Defaults to None.
             key_filename (str, optional): The filename of the private key to use for authentication. Defaults to None.
             port (int, optional): The port number of the SSH server. Defaults to 22.
-        
+
         Returns:
             None
-        
+
         Raises:
             None
-        
+
         Attributes:
             hostname (str): The hostname or IP address of the SSH server.
             username (str): The username for authentication.
@@ -52,15 +52,15 @@ class SSHConnection:
 
     async def async_connect(self):
         """Asynchronously establishes an SSH connection to a remote host.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             tuple: A tuple containing:
                 - bool: True if the connection was successful, False otherwise.
                 - str: The OS type of the remote host if connection was successful, "unknown" otherwise.
-        
+
         Raises:
             Exception: If there's an error during the connection process.
         """
@@ -94,15 +94,15 @@ class SSHConnection:
 
     async def read_output(self):
         """Asynchronously reads output from an SSH channel.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             str or None: The decoded output from the SSH channel as a UTF-8 string,
             or None if no channel is available, if there's a channel exception,
             or if there's a socket timeout.
-        
+
         Raises:
             None explicitly, but may propagate exceptions from asyncio or paramiko.
         """
@@ -121,13 +121,13 @@ class SSHConnection:
 
     async def write_input(self, data):
         """Asynchronously writes input data to a channel.
-        
+
         Args:
             data (Any): The data to be sent to the channel.
-        
+
         Returns:
             None: This method doesn't return anything.
-        
+
         Raises:
             RuntimeError: If the channel is not initialized.
         """
@@ -138,16 +138,16 @@ class SSHConnection:
 
     async def execute_command(self, command):
         """Executes a command asynchronously and yields the output.
-        
+
         This method sends a command to the input stream, then continuously reads from the output stream,
         yielding any non-empty output until the stream is exhausted.
-        
+
         Args:
             command (str): The command to be executed.
-        
+
         Returns:
             AsyncGenerator[str, None]: An asynchronous generator that yields output strings.
-        
+
         Raises:
             None
         """
@@ -161,16 +161,16 @@ class SSHConnection:
 
     async def read_output_generator(self):
         """An asynchronous generator method that continuously reads output and yields it.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             AsyncGenerator[Any, None]: An asynchronous generator that yields output as it becomes available.
-        
+
         Raises:
             None
-        
+
         Notes:
             - This method runs in an infinite loop, continuously checking for new output.
             - If no output is available, it waits for 0.1 seconds before checking again.
@@ -185,10 +185,10 @@ class SSHConnection:
 
     async def get_os_type(self):
         """Asynchronously determines the operating system type of the current environment.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             str: A string representing the detected operating system type.
                  Possible values are:
@@ -196,10 +196,10 @@ class SSHConnection:
                  - 'macos': For macOS operating systems
                  - 'windows': For Windows operating systems
                  - 'unknown': If the operating system type cannot be determined
-        
+
         Raises:
             None
-        
+
         Note:
             This method uses the 'uname -s' command to determine the operating system type.
             It writes the command to the input, waits for execution, and then reads the output.
@@ -220,13 +220,13 @@ class SSHConnection:
 
     async def close(self):
         """Closes the connection and associated resources.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             None
-        
+
         Raises:
             None
         """
@@ -238,17 +238,17 @@ class SSHConnection:
 
     async def open_sftp(self):
         """Open an SFTP session.
-        
+
         This method opens an SFTP (SSH File Transfer Protocol) session using the existing SSH connection.
         If there's no active SSH connection, it raises an exception. If an SFTP session is not already
         open, it creates a new one.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             paramiko.SFTPClient: An SFTP client object for file transfer operations.
-        
+
         Raises:
             Exception: If not connected to an SSH server when trying to open the SFTP session.
         """
@@ -262,7 +262,7 @@ class SSHConnection:
 
     async def get_sftp_client(self):
         """Asynchronously creates and returns an SFTP client.
-        
+
         Returns:
             asyncssh.SFTPClient: An asynchronous SFTP client object.
         """
@@ -270,13 +270,13 @@ class SSHConnection:
 
     async def sftp_list_dir(self, path):
         """Asynchronously list the contents of a directory on an SFTP server.
-        
+
         Args:
             path (str): The path of the directory to list.
-        
+
         Returns:
             list: A list of filenames in the specified directory.
-        
+
         Raises:
             SFTPError: If there's an error accessing the SFTP server or listing the directory.
         """
@@ -285,14 +285,14 @@ class SSHConnection:
 
     async def sftp_get(self, remotepath, localpath):
         """Asynchronously retrieves a file from a remote SFTP server and saves it locally.
-        
+
         Args:
             remotepath (str): The path of the file on the remote SFTP server.
             localpath (str): The path where the file should be saved locally.
-        
+
         Returns:
             None: This method doesn't return anything explicitly.
-        
+
         Raises:
             SFTPException: If there's an error during the SFTP file transfer.
             IOError: If there's an issue with local file operations.
@@ -304,14 +304,14 @@ class SSHConnection:
 
     async def sftp_put(self, localpath, remotepath):
         """Uploads a local file to a remote SFTP server asynchronously.
-        
+
         Args:
             localpath (str): The path to the local file to be uploaded.
             remotepath (str): The destination path on the remote SFTP server.
-        
+
         Returns:
             None: This method doesn't return anything explicitly.
-        
+
         Raises:
             SFTPException: If there's an error during the SFTP operation.
             IOError: If there's an issue reading the local file or writing to the remote path.
@@ -324,12 +324,12 @@ class SSHConnection:
 
 def retry_connection(ssh_connection, max_attempts=3, delay=5):
     """Attempts to establish an SSH connection with retry logic.
-    
+
     Args:
         ssh_connection: The SSH connection object to be used for connecting.
         max_attempts (int): The maximum number of connection attempts. Defaults to 3.
         delay (int): The delay in seconds between connection attempts. Defaults to 5.
-    
+
     Returns:
         bool: True if the connection was successful, False otherwise.
     """
@@ -345,16 +345,16 @@ def retry_connection(ssh_connection, max_attempts=3, delay=5):
 
 def execute_with_timeout(func, *args, timeout=30, **kwargs):
     """Executes a function with a timeout mechanism.
-    
+
     Args:
         func (callable): The function to be executed.
         *args: Variable length argument list to be passed to the function.
         timeout (int, optional): Maximum execution time in seconds. Defaults to 30.
         **kwargs: Arbitrary keyword arguments to be passed to the function.
-    
+
     Returns:
         Any: The result of the function if it completes within the timeout period, or None if it times out.
-    
+
     Raises:
         None explicitly, but may raise exceptions from the executed function.
     """
@@ -370,14 +370,14 @@ def execute_with_timeout(func, *args, timeout=30, **kwargs):
 
 async def execute_ssh_command(connection, command):
     """Executes an SSH command on a remote server.
-    
+
     Args:
         connection (SSHConnection): The established SSH connection object.
         command (str): The command to be executed on the remote server.
-    
+
     Returns:
         str: The standard output of the executed command.
-    
+
     Raises:
         PermissionDenied: If the user lacks the necessary permissions to execute the command.
         ConnectionLost: If the SSH connection is lost during command execution.
@@ -397,17 +397,17 @@ async def execute_ssh_command(connection, command):
 
 def generate_ssh_key():
     """Generate an SSH key pair.
-    
+
     This function creates a new RSA key pair for SSH authentication. It generates a 2048-bit RSA private key and its corresponding public key.
-    
+
     Args:
         None
-    
+
     Returns:
         tuple: A tuple containing two elements:
             - bytes: The private key in PEM format.
             - rsa.RSAPublicKey: The public key object.
-    
+
     Raises:
         cryptography.exceptions.UnsupportedAlgorithm: If the required cryptographic algorithms are not available.
     """

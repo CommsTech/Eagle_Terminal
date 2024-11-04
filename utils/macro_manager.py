@@ -14,13 +14,13 @@ from utils.logger import logger
 class MacroManager:
     def __init__(self, macro_file: str = "macros.json"):
         """Initialize the MacroRecorder class.
-        
+
         Args:
             macro_file (str): The path to the JSON file containing saved macros. Defaults to "macros.json".
-        
+
         Returns:
             None
-        
+
         """
         self.macro_file = macro_file
         self.macros: Dict[str, List[str]] = {}

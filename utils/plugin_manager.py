@@ -14,13 +14,13 @@ from utils.logger import logger
 class PluginManager:
     def __init__(self, main_window):
         """Initialize the PluginManager.
-        
+
         Args:
             main_window (Any): The main window of the application.
-        
+
         Returns:
             None
-        
+
         Attributes:
             main_window (Any): Reference to the main application window.
             plugin_dir (str): Directory where plugins are stored.
@@ -82,13 +82,13 @@ class PluginManager:
 
     def setup_plugins(self):
         """Sets up all registered plugins for the application.
-        
+
         Args:
             self: The instance of the class containing this method.
-        
+
         Returns:
             None
-        
+
         Raises:
             Exception: If there's an error while setting up a plugin.
         """
