@@ -1,6 +1,6 @@
 # Eagle Terminal
 
-Eagle Terminal is an all-in-one SSH client and network diagnostic tool, designed to provide a comprehensive solution for network administrators and IT professionals.
+Eagle Terminal is an all-in-one SSH client and network diagnostic tool, designed to provide a comprehensive solution for network administrators and IT professionals. NOTE: This is a work in progress and is not yet ready for production use. I am working on getting it to a point where it is stable and useful.
 
 ## Recent Updates
 
@@ -20,20 +20,34 @@ Currently implemented:
 - Multi-protocol support:
   - SSH (Secure Shell) with asyncssh
   - Serial connections
+  - SFTP file transfer capabilities
 - AI-powered assistance:
   - Efficient AI model (DistilBERT) for terminal operations
   - Command suggestions and explanations based on context
   - Output analysis and insights for system information
   - Troubleshooting recommendations
   - Continuous learning from user interactions and device outputs
+  - Network topology analysis and recommendations
 - Built-in knowledge base:
   - Local note-taking system (wiki-style)
   - Integration of device-specific notes with AI recommendations
+  - Searchable documentation and command references
 - Advanced terminal management:
   - Multi-tab interface for managing multiple connections
   - Split-screen view for simultaneous sessions
   - Improved file browser for remote systems
   - Customizable themes and layouts
+  - Session recording and playback
+  - Command history with search functionality
+- Network Tools:
+  - Network discovery and mapping
+  - Basic Ansible integration for automation
+  - Batch command execution across multiple sessions
+- Security Features:
+  - SSH key management
+  - Password manager integration
+  - Session encryption
+  - Audit logging
 - Improved error handling and logging
 - Enhanced settings management with import/export functionality
 - Optimized AI model loading and usage
@@ -46,6 +60,20 @@ Currently implemented:
 Planned features:
 - Telnet support
 - RDP (Remote Desktop Protocol) support
+- Advanced Ansible integration
+- Cloud service integration (AWS, Azure, GCP)
+- Container management interface
+
+## System Requirements
+
+- Operating System:
+  - Windows 10/11
+  - macOS 10.15 or later
+  - Linux (major distributions)
+- Memory: 4GB RAM minimum, 8GB recommended
+- Storage: 5GB free space
+- Display: 1280x720 minimum resolution
+- Internet connection for AI features and updates
 
 ## Installation
 
@@ -67,20 +95,25 @@ Planned features:
 
 1. Clone the repository:
    ```
-   https://git.commsnet.org/commstech/eagle_terminal.git
-   ```
-
-   GitHub repo (not always current)
-   ```
    git clone https://github.com/CommsTech/Eagle_Terminal.git
    ```
 
-2. Install the required dependencies:
+2. Create a venv
+   ```
+   python -m venv venv
+   ```
+
+3. Activate the venv
+   ```
+   .\venv\Scripts\activate
+   ```
+
+4. Install the required dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-3. Run the application:
+5. Run the application:
    ```
    python Eagle_Terminal.py
    ```
@@ -106,3 +139,14 @@ Eagle Terminal is licensed under the Business Source License 1.1 (BSL 1.1). See 
 For questions, suggestions, or support, please open an issue on the GitHub repository or contact the maintainer at [support@commsnet.org].
 
 ## File Structure
+
+## Troubleshooting
+
+Common issues and their solutions can be found in our [Troubleshooting Guide](docs/troubleshooting.md).
+
+## Acknowledgments
+
+Special thanks to:
+- The asyncssh project
+- PyQt community
+- Our contributors and testers

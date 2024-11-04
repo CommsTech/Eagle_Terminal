@@ -122,7 +122,7 @@ ssh_config
 # Logs and debugging
 *.log
 debug/
-logs/
+/logs/*.log
 profiling_results/
 *.trace
 *.profile
