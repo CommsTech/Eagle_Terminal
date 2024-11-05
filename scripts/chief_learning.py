@@ -36,7 +36,7 @@ def query_agents(prompt: str, secrets: Dict[str, str]) -> str:
         "mode": "chat",
         "character": "mixture",  # Assuming this targets the mixture of agents
     }
-    response = requests.post(f"{secrets['url']}/api/chat", headers=headers, json=data)
+    response = requests.post(f"{secrets['url']}/api/chat", headers=headers, json=data, timeout=10)
     if response.status_code == 200:
         return response.json()["message"]
     else:
@@ -95,3 +95,4 @@ if __name__ == "__main__":
     print(
         "This script is not meant to be run directly. Please use it from within the Eagle Terminal application."
     )
+
