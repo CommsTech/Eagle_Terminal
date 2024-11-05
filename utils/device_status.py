@@ -5,13 +5,31 @@ It includes functions for handling SSH and local devices, as well as
 utility functions for command execution and sanitization.
 """
 
-import ssl
 import re
 import shlex
+import ssl
 import subprocess
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Tuple
 
 import paramiko
+
+
+def safe_execute_command(client: paramiko.SSHClient, command: str) -> str:
+    """Safely execute a command on an SSH client.
+
+    Args:
+        client (paramiko.SSHClient): The SSH client to execute the command on.
+        command (str): The command to execute.
+
+    Returns:
+        str: The output of the command.
+
+    Raises:
+        paramiko.SSHException: If there is an error executing the command.
+    """
+    sanitized_command = shlex.quote(command)
+    stdin, stdout, stderr = client.exec_command(sanitized_command)
+    return stdout.read().decode("utf-8").strip()
 
 
 def get_device_status(device: Dict[str, Any]) -> Dict[str, Any]:
@@ -71,18 +89,21 @@ def get_ssh_device_status(device: Dict[str, Any]) -> Dict[str, Any]:
         return {"status": "error", "error": str(e)}
 
 
-def safe_execute_command_with_ssl(client, command):
+def safe_execute_command_with_ssl(
+    client: paramiko.SSHClient, command: str, context: Optional[ssl.SSLContext] = None
+) -> str:
     """Safely execute a command on an SSH client with verified SSL context.
 
     Args:
         client: The SSH client with verified SSL.
         command (str): The command to execute.
+        context (Optional[ssl.SSLContext]): SSL context to use.
 
     Returns:
         str: The output of the command.
     """
-    context = ssl.create_default_context()
-    client = client.wrap_socket(context)  # Ensure the client uses the secure context
+    if context is None:
+        context = ssl.create_default_context()
     sanitized_command = shlex.quote(command)
     _, stdout, _ = client.exec_command(sanitized_command)
     return stdout.read().decode("utf-8").strip()

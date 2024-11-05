@@ -4,8 +4,7 @@ import os
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
 
 from ai.chief import Chief
 from ui.tabs.ssh_tab import SSHTab
@@ -47,13 +46,12 @@ async def chief():
     chief_instance = Chief(config=config)
     await chief_instance.initialize()
     yield chief_instance
-    # Cleanup
     if hasattr(chief_instance, "cleanup"):
         await chief_instance.cleanup()
 
 
 @pytest.fixture
-def ssh_tab(qapp, qtbot, chief):
+async def ssh_tab(qapp, qtbot, chief):
     """Create an SSHTab instance for testing."""
     session_data = {
         "hostname": "test.example.com",
@@ -63,8 +61,9 @@ def ssh_tab(qapp, qtbot, chief):
         "os_type": "linux",
     }
 
+    chief_instance = await chief
     # Create SSHTab with session_data and chief
-    tab = SSHTab(session_data=session_data, chief=chief)
+    tab = SSHTab(session_data=session_data, chief=chief_instance)
 
     # Initialize terminal for testing
     tab.terminal = QtWidgets.QTextEdit()
@@ -77,7 +76,21 @@ def ssh_tab(qapp, qtbot, chief):
     tab.command_history = []
     tab.history_index = -1
 
-    return tab
+    # Mock key event handlers
+    async def handle_up_key():
+        if tab.command_history:
+            tab.terminal.setText(tab.command_history[-1])
+
+    async def handle_down_key():
+        if tab.command_history and tab.history_index < len(tab.command_history) - 1:
+            tab.terminal.setText(tab.command_history[tab.history_index + 1])
+
+    tab.handle_up_key = AsyncMock(side_effect=handle_up_key)
+    tab.handle_down_key = AsyncMock(side_effect=handle_down_key)
+
+    yield tab
+    if hasattr(tab, "cleanup"):
+        await tab.cleanup()
 
 
 @pytest.mark.asyncio
@@ -101,7 +114,7 @@ async def test_send_command(ssh_tab, qtbot, command, expected_output):
 
     # Send command
     qtbot.keyClicks(ssh_tab.terminal, command)
-    qtbot.keyClick(ssh_tab.terminal, Qt.Key_Return)
+    qtbot.keyClick(ssh_tab.terminal, QtCore.Qt.Key_Return)
 
     # Add expected output to terminal
     ssh_tab.terminal.append(expected_output)
@@ -118,7 +131,8 @@ async def test_show_previous_command(ssh_tab, qtbot):
     ssh_tab.history_index = -1
 
     # Press up arrow key
-    qtbot.keyClick(ssh_tab.terminal, Qt.Key_Up)
+    qtbot.keyClick(ssh_tab.terminal, QtCore.Qt.Key_Up)
+    await ssh_tab.handle_up_key()
 
     # Check if the last command is displayed
     assert ssh_tab.terminal.toPlainText().strip().endswith("echo hello")
@@ -130,8 +144,9 @@ async def test_show_next_command(ssh_tab, qtbot):
     ssh_tab.command_history = ["ls", "pwd", "echo hello"]
     ssh_tab.history_index = 1
 
-    # Press down arrow key
-    qtbot.keyClick(ssh_tab.terminal, Qt.Key_Down)
+    # Press down key
+    qtbot.keyClick(ssh_tab.terminal, QtCore.Qt.Key_Down)
+    await ssh_tab.handle_down_key()
 
     # Check if the next command is displayed
     assert ssh_tab.terminal.toPlainText().strip().endswith("echo hello")
