@@ -13,6 +13,20 @@ from utils.logger import logger
 
 class PluginManager:
     def __init__(self, main_window):
+        """Initialize the PluginManager.
+        
+        Args:
+            main_window (Any): The main window of the application.
+        
+        Returns:
+            None
+        
+        Attributes:
+            main_window (Any): Reference to the main application window.
+            plugin_dir (str): Directory where plugins are stored.
+            plugins (Dict[str, Any]): Dictionary to store loaded plugins.
+            hooks (Dict[str, List]): Dictionary of event hooks and their associated callbacks.
+        """
         self.main_window = main_window
         self.plugin_dir = "plugins"
         self.plugins: Dict[str, Any] = {}
@@ -67,6 +81,17 @@ class PluginManager:
         return list(self.plugins.keys())
 
     def setup_plugins(self):
+        """Sets up all registered plugins for the application.
+        
+        Args:
+            self: The instance of the class containing this method.
+        
+        Returns:
+            None
+        
+        Raises:
+            Exception: If there's an error while setting up a plugin.
+        """
         for name, plugin in self.plugins.items():
             try:
                 plugin.setup(self.main_window)

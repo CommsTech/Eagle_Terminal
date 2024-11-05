@@ -23,6 +23,15 @@ def setup_global_error_handling():
 class ErrorHandler:
     @staticmethod
     def show_error(title: str, message: str):
+        """Displays an error message box with a given title and message.
+        
+        Args:
+            title (str): The title of the error message box.
+            message (str): The main text content of the error message box.
+        
+        Returns:
+            None: This method doesn't return anything.
+        """
         error_box = QMessageBox()
         error_box.setIcon(QMessageBox.Critical)
         error_box.setWindowTitle(title)
