@@ -59,5 +59,18 @@ class DeviceListWidget(QTreeWidget):
         print("Cleared device list")
 
     def on_item_clicked(self, item, column):
+        """Handles the event when an item in the device list is clicked.
+        
+        Args:
+            self: The instance of the class containing this method.
+            item (QTreeWidgetItem): The item that was clicked in the device list.
+            column (int): The column number of the item that was clicked.
+        
+        Returns:
+            None
+        
+        Emits:
+            device_selected: Emits the selected device's ID.
+        """
         device_id = item.data(0, Qt.UserRole)
         self.device_selected.emit(device_id)
