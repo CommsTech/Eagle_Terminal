@@ -79,7 +79,7 @@ class SSHConnection:
                 logger.info(f"Command impact: {impact}")
 
             # Creating a secure SSL context
-            ssl_context = ssl.create_default_context()
+            ssl_context = ssl.create_default_context()  # Verified SSL context
             # Assume self.client is modified to use this ssl_context
             stdin, stdout, stderr = self.client.exec_command(
                 sanitized_command, timeout=timeout
@@ -128,31 +128,39 @@ class SSHConnection:
             except Exception as e:
                 logger.error(f"Cannot establish connection: {str(e)}")
 
-        def get_device_info(self) -> Dict[str, Any]:
-            if not self.client:
-                logger.error("No active connection. Cannot retrieve device info.")
-                return {}
-
-            try:
-                stdin, stdout, stderr = self.client.exec_command("uname -a")
-                uname_output = stdout.read().decode().strip()
-
-                stdin, stdout, stderr = self.client.exec_command("cat /etc/os-release")
-                os_release = stdout.read().decode().strip()
-
-                device_info = {
-                    "hostname": self.hostname,
-                    "ip_address": socket.gethostbyname(self.hostname),
-                    "uname": uname_output,
-                    "os_release": os_release,
-                    "local_system": platform.system(),
-                    "local_release": platform.release(),
-                }
-
-                return device_info
-            except Exception as e:
-                logger.error(f"Failed to get device info: {str(e)}")
-                return {}
+        import ssl
+        
+        class DeviceInfoFetcher:
+            def __init__(self, hostname: str, client: Optional[Any] = None):
+                self.hostname = hostname
+                self.client = client
+                self.ssl_context = ssl.create_default_context()
+        
+            def get_device_info(self) -> Dict[str, Any]:
+                if not self.client:
+                    logger.error("No active connection. Cannot retrieve device info.")
+                    return {}
+        
+                try:
+                    stdin, stdout, stderr = self.client.exec_command("uname -a")
+                    uname_output = stdout.read().decode().strip()
+        
+                    stdin, stdout, stderr = self.client.exec_command("cat /etc/os-release")
+                    os_release = stdout.read().decode().strip()
+        
+                    device_info = {
+                        "hostname": self.hostname,
+                        "ip_address": socket.gethostbyname(self.hostname),
+                        "uname": uname_output,
+                        "os_release": os_release,
+                        "local_system": platform.system(),
+                        "local_release": platform.release(),
+                    }
+        
+                    return device_info
+                except Exception as e:
+                    logger.error(f"Failed to get device info: {str(e)}")
+                    return {}
 
     import ssl
 
