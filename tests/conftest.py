@@ -1,5 +1,3 @@
-from utils.settings_manager import SettingsManager
-from ai.chief import Chief
 import asyncio
 import os
 import sys
@@ -7,6 +5,9 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from PyQt5 import QtWidgets
+
+from ai.chief import Chief
+from utils.settings_manager import SettingsManager
 
 # Add the project root directory to Python path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
