@@ -65,3 +65,14 @@
 2024-11-04 07:09:13,835 - eagle_terminal - INFO - Chief components initialized successfully
 2024-11-04 07:09:16,759 - eagle_terminal - INFO - Chief components initialized successfully
 2024-11-04 07:09:19,924 - eagle_terminal - INFO - Chief components initialized successfully
+2024-11-04 19:17:10,595 - eagle_terminal - INFO - Chief components initialized successfully
+2024-11-04 19:17:12,711 - eagle_terminal - DEBUG - Setting up MainWindow components
+2024-11-04 19:17:12,758 - eagle_terminal - DEBUG - Menu bar set up
+2024-11-04 19:17:12,759 - eagle_terminal - WARNING - Meshtastic library not found. Meshtastic Chat feature will not be available.
+2024-11-04 19:17:12,811 - eagle_terminal - DEBUG - Toolbar set up
+2024-11-04 19:17:12,811 - eagle_terminal - DEBUG - Setting up UI
+2024-11-04 19:17:12,811 - eagle_terminal - DEBUG - UI setup complete
+2024-11-04 19:17:12,811 - eagle_terminal - INFO - Loading plugins from C:\Users\commstech\Github\Eagle_Terminal\plugins
+2024-11-04 19:17:12,811 - eagle_terminal - INFO - Loaded script: chief_learning
+2024-11-04 19:17:12,821 - eagle_terminal - INFO - Loaded script: download_model
+2024-11-04 19:17:17,126 - eagle_terminal - INFO - Closing application

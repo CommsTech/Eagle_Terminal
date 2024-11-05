@@ -58,26 +58,26 @@ class SSHConnection:
             return False
 
     import ssl
-    
+
     def execute_command(
         self, command: str, timeout: int = 30
     ) -> Tuple[Optional[str], Optional[str]]:
         if not self.client:
             logger.error("No active connection. Please connect first.")
             return None, "No active connection"
-    
+
         try:
             sanitized_command = shlex.quote(command)
             if command.strip() == "history":
                 return self._get_history(), None
             elif command.strip() == "ll":
                 return self.execute_command("ls -la")[0], None
-    
+
             if self.chief:
                 device_info = self.get_device_info()
                 impact = self.chief.explain_command_impact(command, device_info)
                 logger.info(f"Command impact: {impact}")
-    
+
             # Creating a secure SSL context
             ssl_context = ssl.create_default_context()
             # Assume self.client is modified to use this ssl_context
@@ -86,13 +86,13 @@ class SSHConnection:
             )
             output = stdout.read().decode()
             error = stderr.read().decode()
-    
+
             self.session_history.append(command)
-    
+
             if self.chief:
                 analysis = self.chief.analyze_command_output(command, output)
                 logger.info(f"Command analysis: {analysis}")
-    
+
             return output, error
         except Exception as e:
             logger.error(f"Failed to execute command: {str(e)}")
@@ -104,37 +104,42 @@ class SSHConnection:
         )
         return history
 
-    import ssl 
-    
+    import ssl
+
     # Assuming previous code context within a class for SSH connection
-    
+
     class SSHClient:
         def __init__(self, hostname: str):
             self.hostname = hostname
             self.client = None
-    
+
         def connect(self):
             try:
                 context = ssl.create_default_context()  # Create a secure SSL context
                 # Assuming Paramiko or an equivalent library is used for SSH connections.
                 self.client = paramiko.SSHClient()
                 self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                self.client.connect(self.hostname, username='username', password='password', ssl_context=context)
+                self.client.connect(
+                    self.hostname,
+                    username="username",
+                    password="password",
+                    ssl_context=context,
+                )
             except Exception as e:
                 logger.error(f"Cannot establish connection: {str(e)}")
-    
+
         def get_device_info(self) -> Dict[str, Any]:
             if not self.client:
                 logger.error("No active connection. Cannot retrieve device info.")
                 return {}
-    
+
             try:
                 stdin, stdout, stderr = self.client.exec_command("uname -a")
                 uname_output = stdout.read().decode().strip()
-    
+
                 stdin, stdout, stderr = self.client.exec_command("cat /etc/os-release")
                 os_release = stdout.read().decode().strip()
-    
+
                 device_info = {
                     "hostname": self.hostname,
                     "ip_address": socket.gethostbyname(self.hostname),
@@ -143,14 +148,14 @@ class SSHConnection:
                     "local_system": platform.system(),
                     "local_release": platform.release(),
                 }
-    
+
                 return device_info
             except Exception as e:
                 logger.error(f"Failed to get device info: {str(e)}")
                 return {}
 
     import ssl
-    
+
     def suggest_command_completion(self, partial_command: str) -> List[str]:
         if not self.client:
             return []
@@ -165,13 +170,13 @@ class SSHConnection:
                 banner_timeout=2.0,
                 auth_timeout=2.0,
                 compress=True,
-                term='xterm',
+                term="xterm",
                 pkey=None,
                 key_filename=None,
                 password=None,
                 ciphers=None,
                 disabled_algorithms=None,
-                kex='diffie-hellman-group-exchange-sha256',
+                kex="diffie-hellman-group-exchange-sha256",
                 min_dh_group_size=None,
                 gss_auth=None,
                 gss_kex=None,
@@ -187,7 +192,7 @@ class SSHConnection:
                 ca_certs=None,
                 capath=None,
                 cadata=None,
-                context=context
+                context=context,
             )
             completions = stdout.read().decode().splitlines()
             return completions
