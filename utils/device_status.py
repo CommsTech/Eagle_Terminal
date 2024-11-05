@@ -14,11 +14,18 @@ from typing import Any, Dict, Optional, Tuple
 import paramiko
 
 
-def safe_execute_command(client: paramiko.SSHClient, command: str) -> str:
+import paramiko
+import ssl
+from cryptography.fernet import Fernet
+
+
+def safe_execute_command(hostname: str, username: str, password: str, command: str) -> str:
     """Safely execute a command on an SSH client.
 
     Args:
-        client (paramiko.SSHClient): The SSH client to execute the command on.
+        hostname (str): The hostname of the SSH server.
+        username (str): The username for SSH authentication.
+        password (str): The password for SSH authentication.
         command (str): The command to execute.
 
     Returns:
@@ -28,8 +35,13 @@ def safe_execute_command(client: paramiko.SSHClient, command: str) -> str:
         paramiko.SSHException: If there is an error executing the command.
     """
     sanitized_command = shlex.quote(command)
-    stdin, stdout, stderr = client.exec_command(sanitized_command)
-    return stdout.read().decode("utf-8").strip()
+    context = ssl.create_default_context()  # Secure default context
+    with paramiko.SSHClient() as client:
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.connect(hostname=hostname, username=username, password=password,
+                       sock=context.wrap_socket())
+        stdin, stdout, stderr = client.exec_command(sanitized_command)
+        return stdout.read().decode("utf-8").strip()
 
 
 def get_device_status(device: Dict[str, Any]) -> Dict[str, Any]:
@@ -103,11 +115,14 @@ def safe_execute_command_with_ssl(
         str: The output of the command.
     """
     if context is None:
-        context = ssl.create_default_context()
+        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     sanitized_command = shlex.quote(command)
     _, stdout, _ = client.exec_command(sanitized_command)
     return stdout.read().decode("utf-8").strip()
 
+
+import subprocess
+from typing import Dict, Any
 
 def get_local_device_status() -> Dict[str, Any]:
     """Get the status of the local device.
@@ -124,14 +139,13 @@ def get_local_device_status() -> Dict[str, Any]:
         status["cpu_usage"] = (
             subprocess.check_output(["top", "-bn1"]).decode("utf-8").strip()
         )
-        # Fixed command by removing shell=True and using subprocess capabilities
-        status["disk_usage"] = (
-            subprocess.check_output(
-                ["bash", "-c", "/bin/df -h / | awk '/\\// {print $5}'"]
-            )
-            .decode("utf-8")
-            .strip()
-        )
+        # Replaceing the need for shell with a more direct invocation
+        disk_usage_output = subprocess.check_output(["df", "-h", "/"]).decode("utf-8").strip()
+        # Parsing the output instead of using an awk shell command
+        lines = disk_usage_output.splitlines()
+        disk_usage = next((line.split()[4] for line in lines if line.startswith("/") or "/" in line), "Not found")
+        status["disk_usage"] = disk_usage
+
         return status
     except Exception as e:
         return {"status": "error", "error": str(e)}
