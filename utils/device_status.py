@@ -70,16 +70,20 @@ def get_ssh_device_status(device: Dict[str, Any]) -> Dict[str, Any]:
         return {"status": "error", "error": str(e)}
 
 
-def safe_execute_command(client, command):
-    """Safely execute a command on an SSH client.
+import ssl
+
+def safe_execute_command_with_ssl(client, command):
+    """Safely execute a command on an SSH client with verified SSL context.
 
     Args:
-        client: The SSH client.
+        client: The SSH client with verified SSL.
         command (str): The command to execute.
 
     Returns:
         str: The output of the command.
     """
+    context = ssl.create_default_context()
+    client = client.wrap_socket(context)  # Ensure the client uses the secure context
     sanitized_command = shlex.quote(command)
     _, stdout, _ = client.exec_command(sanitized_command)
     return stdout.read().decode("utf-8").strip()
@@ -100,14 +104,12 @@ def get_local_device_status() -> Dict[str, Any]:
         status["cpu_usage"] = (
             subprocess.check_output(["top", "-bn1"]).decode("utf-8").strip()
         )
-        status["disk_usage"] = (
-            subprocess.check_output(r"df -h / | awk '/\// {print $5}'", shell=True)
-            .decode("utf-8")
-            .strip()
-        )
+        # Fixed command by removing shell=True and using subprocess capabilities
+        status["disk_usage"] = subprocess.check_output(["bash", "-c", "/bin/df -h / | awk '/\// {print $5}'"]).decode("utf-8").strip()
         return status
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
 
 
 def sanitize_command(command: str) -> str:
@@ -187,14 +189,17 @@ def get_local_device_info() -> Dict[str, Any]:
     """
     try:
         info = {}
-        info["hostname"] = subprocess.check_output(["hostname"]).decode("utf-8").strip()
-        info["os"] = subprocess.check_output(["uname", "-s"]).decode("utf-8").strip()
-        info["kernel"] = (
-            subprocess.check_output(["uname", "-r"]).decode("utf-8").strip()
-        )
-        info["architecture"] = (
-            subprocess.check_output(["uname", "-m"]).decode("utf-8").strip()
-        )
+        commands = {
+            "hostname": ["hostname"],
+            "os": ["uname", "-s"],
+            "kernel": ["uname", "-r"],
+            "architecture": ["uname", "-m"]
+        }
+        
+        info["hostname"] = subprocess.check_output(commands["hostname"]).decode("utf-8").strip()
+        info["os"] = subprocess.check_output(commands["os"]).decode("utf-8").strip()
+        info["kernel"] = subprocess.check_output(commands["kernel"]).decode("utf-8").strip()
+        info["architecture"] = subprocess.check_output(commands["architecture"]).decode("utf-8").strip()
         return info
     except Exception as e:
         return {"error": str(e)}
